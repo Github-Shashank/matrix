@@ -51,19 +51,19 @@ class matrix:
         m = [[self[i,j]-other[i,j] for j in range(ord[1])] for i in range(ord[0]) ]
         return matrix(m)
 
-    def __mul__(self, other):
-        if isinstance(other, (int, float)):
-            return matrix([[val * other for val in row] for row in self.m])
-        elif isinstance(other, matrix):
-            r, n = self.order
-            c = other.order[1]
-            m = [[sum(self[i,k]*other[k,j] for k in range(n)) for j in range(c)] for i in range(r)]
-            return matrix(m)
-        else:
-            raise TypeError("Unsupported operand type for *")
+        def __mul__(self, other):
+            if isinstance(other, (int, float)):
+                return matrix([[val * other for val in row] for row in self.m])
+            elif isinstance(other, matrix):
+                r, n = self.order
+                c = other.order[1]
+                m = [[sum(self[i,k]*other[k,j] for k in range(n)) for j in range(c)] for i in range(r)]
+                return matrix(m)
+            else:
+                raise TypeError("Unsupported operand type for *")
 
-    def __rmul__(self, other):
-        return self.__mul__(other)
+        def __rmul__(self, other):
+            return self.__mul__(other)
 
     def __pow__(self, raisedTo):
         if isinstance(raisedTo, int) and raisedTo > 0:
