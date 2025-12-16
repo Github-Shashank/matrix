@@ -1,0 +1,49 @@
+PYTHON          ;C++    ;JAVA 
+
+const           ;c++
+check           ;c++
+isequal         ;c++
+add             ;c++
+sub             ;c++
+mul             ;c++
+rmul            ;c++
+pow             ;c++
+getitem
+setitem
+traverse
+addRow
+addCol
+delRow
+delCol
+getRow
+getCol
+isSqrMatrix
+isDiagMatrix
+order
+isColMatrix
+isRowMatrix
+isSclrMatrix
+isIdntMatrix
+isZeroMatrix
+transpose
+isSymtMatrix
+isSkewSymtMatrix
+identity         ;c++
+isInvertible
+isEqualOrder
+isMultiplicable
+minor
+coffactor
+matrixOfMinors
+matrixOfCoffactors
+determinant
+trace
+adjoint
+inverse
+isSingularMatrix
+isNonSingularMatrix
+
+one only
+constant only
+diagonal with diag array
+random
