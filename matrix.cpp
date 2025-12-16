@@ -10,9 +10,9 @@ public:
     int cols;
     vector<vector<int>> data;
 
+    // Check's given vector fits for matrix
     bool check(const vector<vector<int>>& D) {
         if (D.empty()) return false;
-
         rows = D.size();
         cols = D[0].size();
         for (const vector<int>& v : D) {
@@ -20,12 +20,12 @@ public:
                 return false;
             }
         }
-
         ord[0] = rows;
         ord[1] = cols;
-
         return true;
     }
+
+    // ? Why this is here
     void setOrder(int& r,int& c) const;
     Matrix() = default;
 
@@ -36,6 +36,7 @@ public:
         data = v;
     }
 
+    // prints the vector
     void display() const {
         for (const auto& row : data) {
             for (int x : row) {
@@ -46,6 +47,7 @@ public:
         cout << endl;
     }
 
+    // matrix mathematical properties
     pair<int, int> getOrd();
     bool operator==(const Matrix& other);
     Matrix operator+(const Matrix& other);
@@ -55,6 +57,8 @@ public:
     friend Matrix operator*(int num, const Matrix& m) {
         return m * num;
     }
+    Matrix identity() const;
+    Matrix pow(const int& num)const;
 };
 
 pair<int,int> Matrix::getOrd() {
@@ -118,6 +122,7 @@ Matrix Matrix::operator*(const Matrix& other) {
     return Matrix(result);
 }
 
+// Scalar Matrix Multiplication
 Matrix Matrix::operator*(const int& num) const {
     int x,y;
     this->setOrder(x,y);
@@ -128,6 +133,43 @@ Matrix Matrix::operator*(const int& num) const {
         }
     }
     return Matrix(result);
+}
+
+// Identity Matrix
+Matrix Matrix::identity() const {
+    if (rows != cols) {
+        throw runtime_error("Identity matrix only defined for square matrices");
+    }
+
+    vector<vector<int>> result(rows, vector<int>(cols, 0));
+
+    for (int i = 0; i < rows; i++) {
+        result[i][i] = 1;
+    }
+
+    return Matrix(result);
+}
+
+// Power on matrix
+Matrix Matrix::pow(const int& num) const {
+    if (num < 0) {
+        throw runtime_error("Negative powers not supported");
+    }
+    if (num == 0) {
+        return this->identity();
+    }
+    if (num == 1) {
+        return *this;
+    }
+
+    Matrix result = this->identity();
+    Matrix base = *this;
+
+    for (int i = 0; i < num; i++) {
+        result = result * base;
+    }
+
+    return result;
 }
 
 int main() {
@@ -143,19 +185,19 @@ int main() {
     m.display();
 
     vector<vector<int>> b = {
-        {7,8},
-        {4,5},
-        {1,2}
+        {7,8,3},
+        {4,5,3},
+        {1,2,3}
     };
 
     Matrix a(b);
     a.display();
 
-    auto o = m.getOrd();
-    cout << "Matrix Order M: " << o.first << " x " << o.second << endl;
+    // auto o = m.getOrd();
+    // cout << "Matrix Order M: " << o.first << " x " << o.second << endl;
 
-    auto c = a.getOrd();
-    cout << "Matrix Order A: " << c.first << " x " << c.second << endl;
+    // auto c = a.getOrd();
+    // cout << "Matrix Order A: " << c.first << " x " << c.second << endl;
 
     Matrix d;
     // cout << "Sum" << endl;
@@ -164,19 +206,30 @@ int main() {
     // cout << "Difference" << endl;
     // d=a-m;
     // d.display();
-    cout << endl << "a" << endl;
-    a.display();
-    cout << "m" << endl;
-    m.display();
-    cout << "Multiply" << endl;
-    d = a*m;
-    d.display();
+    // cout << endl << "a" << endl;
+    // a.display();
+    // cout << "m" << endl;
+    // m.display();
+    // cout << "Multiply" << endl;
+    // d = a*m;
+    // d.display();
     
-    cout << "a" << endl;
+    // cout << "a" << endl;
+    // a.display();
+    // d  = a*5;
+    // d.display();
+    // d = 5 * a;
+    // d.display();
+
     a.display();
-    d  = a*5;
+
+    d = a.pow(2);
     d.display();
-    d = 5 * a;
+
+    d = a.pow(3);
+    d.display();
+
+    d = a.pow(4);
     d.display();
 
     return 0;
