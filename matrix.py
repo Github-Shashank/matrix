@@ -18,7 +18,7 @@ class matrix:
                 return i
         else:
             return True
-    
+
     def __repr__(self):
         return '{}'.format(self.m)
     
@@ -128,7 +128,6 @@ class matrix:
             else:
                 return matrix(l)
         else:
-            print(colIndex,c)
             raise ValueError(f"Index Error! index out of range {colIndex} for 0 to {c}")
 
     def getRow(self, rowIndex):
